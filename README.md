@@ -25,7 +25,7 @@ This project demonstrates the design, implementation, and testing of firewall ru
 # Setup and Configuration:
 - Create a firewall rule specifying chase.com as the blocked destination.
 - Apply the rule to the LAN → WAN zone.
-- 
+ 
 # Verification:
 - Users are unable to access chase.com from their browser within the company network.
 - Access to all other websites functions normally.
@@ -40,7 +40,7 @@ This test demonstrates the firewall’s ability to enforce policies that control
 
 # Setup and Configuration:
 - Create a firewall rule to block ICMP traffic from the LAN to the specified IP.
-- 
+  
 # Verification:
 - Attempts to ping the blocked IP fail.
 - Other traffic, such as HTTP/HTTPS, continues to work normally.
