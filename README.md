@@ -117,3 +117,145 @@ This test confirms that RDP traffic can be restricted to prevent unauthorized re
  This project demonstrates hands-on experience in designing, implementing, and testing firewall rules and policies to secure an enterprise network. By creating rules to block specific websites, ICMP requests, RDP traffic, and DNS queries while allowing other traffic, the project highlights the importance of precise rule definition, policy enforcement, and thorough testing.
 
 Key skills gained include firewall configuration, traffic monitoring, troubleshooting, and application of best practices in a safe, controlled environment. The project reinforces the need to validate rules before production deployment, maintain organized configurations, and apply the principle of least privilege. Overall, it provides a strong foundation in network security and prepares for real-world enterprise administration and policy management scenarios.
+
+# Project 2: Configuring SonicWall SSL VPN for Remote Access
+
+# Overview:
+This project demonstrates the design, implementation, and testing of a secure SSL VPN on a SonicWall firewall to provide encrypted remote access for users. SSL VPN (Secure Sockets Layer Virtual Private Network), also known as a point-to-site VPN, allows individual devices to securely connect to a corporate network over the internet. Unlike a site-to-site VPN, which connects entire networks, SSL VPN is ideal for remote employees, traveling staff, or home workers who need access to internal company resources such as applications, file servers, databases, and RDP-enabled machines.
+
+# Real-World Use Cases:
+
+- Employees working from home accessing internal HR, CRM, or project management applications securely.
+
+- Traveling staff connecting to company file shares and RDP-enabled PCs from hotels or client sites.
+
+- IT staff performing maintenance, troubleshooting, or remote administration on internal servers.
+
+- Temporary contractors needing restricted access to specific internal resources for limited periods.
+
+
+# Example Scenario:
+
+# A company has offices in Sydney, Melbourne, and Perth. Remote employees and traveling staff need access to:
+
+- Internal databases for reporting and analytics.
+
+- RDP-enabled office PCs to manage applications.
+
+- Shared network drives and company intranet services.
+
+- Internal applications without exposing sensitive data over the public internet.
+
+- SSL VPN ensures that all traffic between the client device and corporate network is encrypted, protecting sensitive data even over public networks.
+
+
+# Project at a Glance:
+
+- Enables secure, encrypted remote access with SonicWall SSL VPN over WAN port 443.
+
+- Assigns a dedicated SSL VPN IP pool (192.168.6.70–192.168.6.90) and routes to the internal subnet X0 (192.168.6.0/24).
+
+- Grants access via the SSLVPN Services group and validates connectivity using NetExtender and RDP.
+
+
+# Steps and Configuration
+
+# Step 1: Prepare the Firewall
+
+- Log in to the SonicWall firewall and navigate to the Manage section to confirm readiness for SSL VPN deployment.
+
+- Ensure the firewall dynamically assigns IP addresses from 192.168.6.20 to 192.168.6.50 on the X0 interface, providing VPN clients proper IP allocation.
+
+# Step 2: Enable SSL VPN
+
+- Enable SSL VPN on the WAN zone, set the port to 4433, and choose Local Domain for user authentication.
+
+# Path: Manage → VPN → SSL VPN → Server Settings → Configure WAN, Port 4433, Local Domain → Accept.
+
+# Step 3: Configure SSL VPN Client Network
+
+- Select the SSLVPN zone and create a new IPv4 network for SSL VPN clients.
+
+- Assign IP addresses 192.168.6.70–192.168.6.90 for remote users.
+
+- Add the X0 subnet to the SSL VPN client routes so users can access internal resources.
+
+- Save the configuration.
+
+# Step 4: Create SSL VPN Users
+
+- Create a local user named John with a secure password.
+
+- Add the user to the SSLVPN Services group to grant VPN access.
+
+- Include the X0 subnet in the VPN access list.
+
+- Save all settings.
+
+# Step 5: Install and Configure NetExtender Client
+
+- Disconnect any other VPN sessions.
+
+- Log in to SonicWall Virtual Office using the new user credentials.
+
+- Create an RDP bookmark with the target PC’s IP address and credentials.
+
+- Download and install the NetExtender client.
+
+- Accept license agreements and complete installation.
+
+# Step 6: Connect to SSL VPN
+
+- Open NetExtender, enter server details and credentials, and click Connect.
+
+- Accept the certificate prompt (“Always Trust”).
+
+- Verify the SSL VPN connection shows both SonicWall public IP and the private IP assigned to the client (e.g., 192.168.6.70).
+
+- Confirm connectivity to internal network 192.168.6.0/24.
+
+  # Verification and Testing:
+
+- Confirm NetExtender adapter shows correct VPN IP and subnet.
+
+- Test connectivity to RDP-enabled PCs, file servers, and internal applications.
+
+- Ensure encrypted traffic flows correctly and routes are accessible.
+
+- Review firewall logs to detect and resolve authentication or routing issues.
+
+# Best Practices:
+
+- Use a Dedicated IP Pool: Prevent IP conflicts between VPN clients and internal LAN.
+
+- Test in a Controlled Environment: Validate setup before production deployment.
+
+- Add Internal Routes Carefully: Only allow access to required subnets.
+
+- Assign Users to Specific VPN Groups: Control resource access with SSLVPN Services groups.
+
+- Monitor Logs and Connectivity: Track VPN sessions, authentication, and traffic patterns.
+
+- Keep Client Software Updated: Use the latest NetExtender version for security.
+
+- Verify Security Settings: Enforce strong passwords and proper encryption.
+
+- Audit VPN Configurations Regularly: Remove unused accounts, routes, and policies.
+
+- Backup Configurations: Ensure quick recovery from misconfigurations.
+
+- Follow Principle of Least Privilege: Users should only access what they need.
+
+
+ # Key Takeaways:
+
+- SSL VPN provides secure remote access as if the user were on-site.
+
+- Gained hands-on experience with VPN setup, IP pool management, client configuration, and internal routing.
+
+- Testing and verification ensure smooth operations and security compliance.
+
+- This project reinforces the importance of group management, firewall policies, and systematic troubleshooting.
+
+# Conclusion:
+Configuring SSL VPN on SonicWall provides a secure and reliable method for remote employees to access internal resources. By enabling SSL VPN on the WAN interface, creating a dedicated IP pool, adding internal routes, and assigning users to the SSLVPN Services group, organizations ensure encrypted communication and proper connectivity. Systematic troubleshooting, monitoring, and regular audits maintain smooth operations and strengthen network security, making this setup ideal for supporting remote work efficiently and securely.
